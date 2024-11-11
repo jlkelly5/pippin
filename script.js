@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const unicornContainer = document.getElementById('unicorn-container');
     const body = document.body;
 
+    let speechContainer = null;
     let speechBubble = null;
 
     // Start the bounce animation
@@ -80,11 +81,31 @@ document.addEventListener('DOMContentLoaded', function() {
             const bubbleText = speechBubble.querySelector('.bubble-text');
             bubbleText.textContent = inputText;
         } else {
-            // Create new speech bubble
+            // Create container for title and speech bubble
+            speechContainer = document.createElement('div');
+            speechContainer.classList.add('speech-container');
+            
+            // Create and style the title
+            const title = document.createElement('div');
+            title.textContent = 'You have been Downshifted';
+            title.style.cssText = `
+                color: #E075A5;
+                font-size: 24px;
+                font-family: Arial, sans-serif;
+                text-align: center;
+                margin-bottom: 10px;
+                margin-top: 20px;
+            `;
+            
+            // Create speech bubble
             speechBubble = document.createElement('div');
             speechBubble.classList.add('speech-bubble');
             speechBubble.innerHTML = `<span class="bubble-text">${inputText}</span>`;
-            unicornContainer.appendChild(speechBubble);
+            
+            // Add title and speech bubble to container
+            speechContainer.appendChild(title);
+            speechContainer.appendChild(speechBubble);
+            unicornContainer.appendChild(speechContainer);
 
             // Show the Remove button
             removeButton.classList.remove('hidden');
@@ -96,9 +117,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Function to remove speech bubble
     function deleteSpeech() {
-        if (speechBubble) {
-            speechBubble.remove();
+        if (speechContainer) {
+            speechContainer.remove();
             speechBubble = null;
+            speechContainer = null;
 
             // Hide the Remove button
             removeButton.classList.add('hidden');
