@@ -71,49 +71,58 @@ document.addEventListener('DOMContentLoaded', function() {
         deleteSpeech();
     });
 
-    // Function to submit or update speech bubble
-    function submitSpeech() {
-        const inputText = document.getElementById('speech-input').value;
-        if (!inputText.trim()) return;
+// Function to submit or update speech bubble
+function submitSpeech() {
+    const inputText = document.getElementById('speech-input').value;
+    if (!inputText.trim()) return;
 
-        if (speechBubble) {
-            // Update existing speech bubble
-            const bubbleText = speechBubble.querySelector('.bubble-text');
-            bubbleText.textContent = inputText;
-        } else {
-            // Create container for title and speech bubble
-            speechContainer = document.createElement('div');
-            speechContainer.classList.add('speech-container');
-            
-            // Create and style the title
-            const title = document.createElement('div');
-            title.textContent = 'You have been Downshifted';
-            title.style.cssText = `
-                color: #E075A5;
-                font-size: 24px;
-                font-family: Arial, sans-serif;
-                text-align: center;
-                margin-bottom: 10px;
-                margin-top: 20px;
-            `;
-            
-            // Create speech bubble
-            speechBubble = document.createElement('div');
-            speechBubble.classList.add('speech-bubble');
-            speechBubble.innerHTML = `<span class="bubble-text">${inputText}</span>`;
-            
-            // Add title and speech bubble to container
-            speechContainer.appendChild(title);
-            speechContainer.appendChild(speechBubble);
-            unicornContainer.appendChild(speechContainer);
+    if (speechBubble) {
+        // Update existing speech bubble text only
+        const bubbleText = speechBubble.querySelector('.bubble-text');
+        bubbleText.textContent = inputText;
+    } else {
+        // Create speech bubble container
+        speechContainer = document.createElement('div');
+        speechContainer.classList.add('speech-container');
 
-            // Show the Remove button
-            removeButton.classList.remove('hidden');
-        }
+        // Create the title that goes ABOVE the speech bubble
+        const title = document.createElement('div');
+        title.textContent = 'You have been Downshifted';
+        title.style.cssText = `
+            color: #E075A5;
+            font-size: 24px;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            position: absolute;
+            width: 100%;
+            top: -40px;
+        `;
 
-        // Clear input field after submission
-        document.getElementById('speech-input').value = '';
+        // Create speech bubble with input text
+        speechBubble = document.createElement('div');
+        speechBubble.classList.add('speech-bubble');
+        speechBubble.innerHTML = `<span class="bubble-text">${inputText}</span>`;
+
+        // Add speech bubble first, then title
+        speechContainer.appendChild(speechBubble);
+        speechBubble.appendChild(title);
+        unicornContainer.appendChild(speechContainer);
+
+        // Show the Remove button
+        removeButton.classList.remove('hidden');
     }
+
+    // Clear input field after submission
+    document.getElementById('speech-input').value = '';
+}
+
+
+
+
+
+
+
+
 
     // Function to remove speech bubble
     function deleteSpeech() {
