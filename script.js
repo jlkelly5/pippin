@@ -71,7 +71,6 @@ document.addEventListener('DOMContentLoaded', function() {
         deleteSpeech();
     });
 
-// Function to submit or update speech bubble
 function submitSpeech() {
     const inputText = document.getElementById('speech-input').value;
     if (!inputText.trim()) return;
@@ -85,7 +84,7 @@ function submitSpeech() {
         speechContainer = document.createElement('div');
         speechContainer.classList.add('speech-container');
 
-        // Create the title that goes ABOVE the speech bubble
+        // Create title with extra margin at bottom
         const title = document.createElement('div');
         title.textContent = 'You have been Downshifted';
         title.style.cssText = `
@@ -95,7 +94,8 @@ function submitSpeech() {
             text-align: center;
             position: absolute;
             width: 100%;
-            top: -40px;
+            top: -80px;
+            margin-bottom: 30px; /* Added extra space below the title */
         `;
 
         // Create speech bubble with input text
@@ -115,14 +115,6 @@ function submitSpeech() {
     // Clear input field after submission
     document.getElementById('speech-input').value = '';
 }
-
-
-
-
-
-
-
-
 
     // Function to remove speech bubble
     function deleteSpeech() {
